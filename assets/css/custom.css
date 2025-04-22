@@ -1,0 +1,8 @@
+/* ใน custom.css */
+/* เพิ่ม ID หรือ Class ครอบเพื่อให้ Specificity สูงขึ้น */
+.card-body .nav-pills .nav-link.active,
+.card-body .nav-pills .show > .nav-link {
+    background-color: #e1e1e1 !important; /* ใส่สีอ่อนๆ ที่ต้องการ (ตัวอย่างสีชมพู อาจจะต้องใช้ !important ถ้าจำเป็นจริงๆ) */
+    color: #000 !important; /* สีตัวอักษร */
+    /* ลองหาก่อนว่าสีที่ต้องการคืออะไรใน Theme */
+}

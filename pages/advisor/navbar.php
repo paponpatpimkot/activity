@@ -1,111 +1,93 @@
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+<?php
+// --- ส่วนนี้ควรจะอยู่ด้านบนของไฟล์ Controller หรือไฟล์ Header ---
+// --- เพื่อดึงข้อมูลผู้ใช้ที่ Login อยู่ และกำหนด $page_title ---
+// session_start(); // ต้องมี session_start() ก่อนใช้งาน $_SESSION
+
+// --- ดึงข้อมูล User ที่ Login ---
+$loggedInUserId = $_SESSION['user_id'] ?? null;
+$loggedInUserFirstName = $_SESSION['first_name'] ?? 'User'; // ควรมีค่าจากตอน Login
+$loggedInUserLastName = $_SESSION['last_name'] ?? '';
+
+// --- กำหนด Page Title (Controller ควรกำหนดค่านี้) ---
+// ตัวอย่างการกำหนดค่าใน Controller หลัก (index.php) ก่อน include header:
+/*
+switch ($_GET['page'] ?? 'dashboard') {
+    case 'dashboard':
+        $page_title = "Dashboard";
+        break;
+    case 'groups_list':
+        $page_title = "จัดการกลุ่มเรียน";
+        break;
+    // ... other cases ...
+    default:
+        $page_title = "ไม่พบหน้า";
+}
+*/
+// กำหนดค่าเริ่มต้น ถ้ายังไม่มีการตั้งค่ามาจาก Controller
+$page_title = $page_title ?? 'Page';
+// --- กำหนด URL ---
+$editProfileUrl = "index.php?page=edit_profile"; // หน้าที่แสดง edit_profile.php
+$logoutUrl = "logout.php"; // สคริปต์สำหรับ Logout (ปรับ Path ตามโครงสร้างของคุณ)
+
+?>
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
   <div class="container-fluid py-1 px-3">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page"><?php echo htmlspecialchars($page_title); ?></li>
+      </ol>      
+    </nav>
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-      <!--
       <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-         <div class="input-group input-group-outline">
-          <label class="form-label">Type here...</label>
-          <input type="text" class="form-control">
-        </div> 
-      </div>-->
-      <ul class="navbar-nav me-md-auto pe-md-3 d-flex align-items-center  ">
-        <li class="nav-item d-flex align-items-center">
-          <a class="navbar-brand px-4 py-3 m-0" href="index.php">
-            <img src="../../assets/img/tatc_logo.gif" class="navbar-brand-img" width="26" height="26" alt="main_logo">
-            <span class="ms-1  text-dark">Student Dashboard</span>
+      </div>
+
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item d-flex align-items-center px-2">
+          <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+            <span class="d-sm-inline d-none"><?php echo htmlspecialchars($loggedInUserFirstName . ' ' . $loggedInUserLastName); ?></span>
           </a>
         </li>
-      </ul>
-      </ul>
-      <ul class="navbar-nav d-flex align-items-center  justify-content-end">
         <li class="nav-item d-flex align-items-center">
-          <a class="btn btn-outline-success btn-sm mb-0 me-3" href="index.php?page=booking_history">ประวัติการจองกิจกรรม</a>
-        </li>
-        <li class="nav-item d-flex align-items-center">
-          <a class="btn btn-outline-success btn-sm mb-0 me-3" href="index.php?page=attendance_history">ประวัติการเข้าร่วมกิจกรรม</a>
-        </li>
-        <li class="nav-item d-flex align-items-center">
-          <a class="btn btn-danger btn-sm mb-0 me-3" href="logout.php">logout</a>
-        </li>
-        <li class="nav-item dropdown pe-3 d-flex align-items-center">
-          <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="material-symbols-rounded">notifications</i>
+          <a href="#" class="nav-link text-body p-0" id="editProfileButton" data-bs-toggle="modal" data-bs-target="#editProfileModal" aria-label="Edit Profile">
+            <i class="material-symbols-rounded cursor-pointer">account_circle</i>
           </a>
-          <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-            <li class="mb-2">
-              <a class="dropdown-item border-radius-md" href="javascript:;">
-                <div class="d-flex py-1">
-                  <div class="my-auto">
-                    <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                  </div>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="text-sm font-weight-normal mb-1">
-                      <span class="font-weight-bold">New message</span> from Laur
-                    </h6>
-                    <p class="text-xs text-secondary mb-0">
-                      <i class="fa fa-clock me-1"></i>
-                      13 minutes ago
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li class="mb-2">
-              <a class="dropdown-item border-radius-md" href="javascript:;">
-                <div class="d-flex py-1">
-                  <div class="my-auto">
-                    <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                  </div>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="text-sm font-weight-normal mb-1">
-                      <span class="font-weight-bold">New album</span> by Travis Scott
-                    </h6>
-                    <p class="text-xs text-secondary mb-0">
-                      <i class="fa fa-clock me-1"></i>
-                      1 day
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item border-radius-md" href="javascript:;">
-                <div class="d-flex py-1">
-                  <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                    <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                      <title>credit-card</title>
-                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                          <g transform="translate(1716.000000, 291.000000)">
-                            <g transform="translate(453.000000, 454.000000)">
-                              <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                              <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </svg>
-                  </div>
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="text-sm font-weight-normal mb-1">
-                      Payment successfully completed
-                    </h6>
-                    <p class="text-xs text-secondary mb-0">
-                      <i class="fa fa-clock me-1"></i>
-                      2 days
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
         </li>
-        <li class="nav-item d-flex align-items-center">
-          <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
-            <i class="material-symbols-rounded">account_circle</i>
+        <li class="nav-item d-flex align-items-center ps-2">
+          <a href="<?php echo $logoutUrl; ?>" class="nav-link text-body p-0" aria-label="Logout" onclick="return confirm('คุณต้องการออกจากระบบใช่หรือไม่?');">
+            <i class="material-symbols-rounded cursor-pointer">logout</i>
+          </a>
+        </li>
+        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+          <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+            </div>
           </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-normal" id="editProfileModalLabel">แก้ไขข้อมูลส่วนตัว</h5>
+        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <iframe src="<?php echo $editProfileUrl; ?>" frameborder="0" style="width: 100%; min-height: 70vh;" title="Edit Profile Form"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">ปิด</button>
+      </div>
+    </div>
+  </div>
+</div>

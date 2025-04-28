@@ -42,7 +42,7 @@ if (isset($_GET['error'])) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <title>
     Students Activity System
   </title>
@@ -54,13 +54,14 @@ if (isset($_GET['error'])) {
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- Material Icons -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <!-- CSS Files -->
   <link id="pagestyle" href="assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
   <style>
-    * {
-      font-family: Kanit;
-    }
+  * {
+    font-family: Kanit;
+  }
   </style>
 </head>
 
@@ -74,11 +75,14 @@ if (isset($_GET['error'])) {
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-dark border-radius-lg py-2 pe-1">
-                  <h4 class="text-white text-center my-2">ระบบบันทึกชั่วโมงกิจกรรม</h4>
+                  <h5 class="text-white text-center my-2">
+                    <img src="assets/img/logo.png" width="50">
+                    ระบบบันทึกชั่วโมงกิจกรรม
+                  </h5>
                 </div>
               </div>
               <div class="card-body">
-              <?php if (!empty($error_message)) echo "<div class='error-message'>{$error_message}</div>"; ?>
+                <?php if (!empty($error_message)) echo "<div class='error-message'>{$error_message}</div>"; ?>
                 <form role="form" class="text-start" method="POST" action="handle_login.php">
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Username</label>
@@ -95,22 +99,12 @@ if (isset($_GET['error'])) {
                 </form>
               </div>
             </div>
-            <ul class="text-sm mt-3 text-light">
-              <div class="row">
-                <div class="col">
-                  <li>สำหรับนักศึกษา
-                    <div>Username=รหัสประจำตัวนักศึกษา </div>
-                    <div>Password=รหัสประจำตัวประชาชน </div>
-                  </li>
-                </div>
-                <div class="col">
-                  <li class="mt-2">สำหรับครูที่ปรึกษาและเจ้าหน้าที่
-                    <div>Username=รหัสประจำตัวประชาชน </div>
-                    <div>Password=รหัสประจำตัวประชาชน </div>
-                  </li>
-                </div>
-              </div>
-            </ul>
+            <div class="text-light text-sm mt-3">
+              <ul>การ login สำหรับนักศึกษา
+                <li>&nbsp;Username=รหัสประจำตัวนักศึกษา </li>
+                <li>Password=รหัสประจำตัวประชาชน </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -122,13 +116,13 @@ if (isset($_GET['error'])) {
   <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
     }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

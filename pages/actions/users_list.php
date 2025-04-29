@@ -128,97 +128,109 @@ if (isset($_SESSION['form_message'])) {
 ?>
 
 <div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3"><?php echo $page_title; ?></h6>
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3"><?php echo $page_title; ?></h6>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2">
+
+          <?php if (!empty($message)) : ?>
+          <div
+            class="alert alert-dismissible text-white fade show mx-4 <?php echo (strpos($message, 'success') !== false || strpos($message, 'สำเร็จ') !== false) ? 'alert-success bg-gradient-success' : ((strpos($message, 'warning') !== false || strpos($message, 'เตือน') !== false) ? 'alert-warning bg-gradient-warning' : 'alert-danger bg-gradient-danger'); ?>"
+            role="alert">
+            <?php echo $message; ?>
+            <button type="button" class="btn-close p-3" data-bs-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <?php endif; ?>
+
+
+          <div class="px-4 mb-3">
+            <a href="index.php?page=user_form" class="btn btn-success bg-gradient-success mb-0">
+              <i class="material-symbols-rounded text-sm">person_add</i>&nbsp;&nbsp;เพิ่มผู้ใช้งานใหม่
+            </a>
+          </div>
+
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ผู้ใช้งาน (ชื่อ-สกุล)
+                  </th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Username</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">บทบาท
+                    (Role)</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    วันที่สร้าง</th>
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if (!empty($users_data)) : ?>
+                <?php foreach ($users_data as $user) : ?>
+                <tr>
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">
+                          <?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></h6>
+                        <p class="text-xs text-secondary mb-0"><?php echo htmlspecialchars($user['email'] ?? 'N/A'); ?>
+                        </p>
+                      </div>
                     </div>
-                </div>
-                <div class="card-body px-0 pb-2">
-
-                    <?php if (!empty($message)) : ?>
-                        <div class="alert alert-dismissible text-white fade show mx-4 <?php echo (strpos($message, 'success') !== false || strpos($message, 'สำเร็จ') !== false) ? 'alert-success bg-gradient-success' : ((strpos($message, 'warning') !== false || strpos($message, 'เตือน') !== false) ? 'alert-warning bg-gradient-warning' : 'alert-danger bg-gradient-danger'); ?>" role="alert">
-                            <?php echo $message; ?>
-                            <button type="button" class="btn-close p-3" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-
-
-                    <div class="px-4 mb-3">
-                        <a href="index.php?page=user_form" class="btn btn-success bg-gradient-success mb-0">
-                            <i class="material-icons text-sm">person_add</i>&nbsp;&nbsp;เพิ่มผู้ใช้งานใหม่
-                        </a>
-                    </div>
-
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ผู้ใช้งาน (ชื่อ-สกุล)</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Username</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">บทบาท (Role)</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">วันที่สร้าง</th>
-                                    <th class="text-secondary opacity-7"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (!empty($users_data)) : ?>
-                                    <?php foreach ($users_data as $user) : ?>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></h6>
-                                                        <p class="text-xs text-secondary mb-0"><?php echo htmlspecialchars($user['email'] ?? 'N/A'); ?></p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0"><?php echo htmlspecialchars($user['username']); ?></p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <?php
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0"><?php echo htmlspecialchars($user['username']); ?></p>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                    <?php
                                                 $role_class = 'bg-gradient-secondary'; // Default
                                                 if ($user['role_name'] == 'admin') $role_class = 'bg-gradient-danger';
                                                 elseif ($user['role_name'] == 'advisor') $role_class = 'bg-gradient-info';
                                                 elseif ($user['role_name'] == 'student') $role_class = 'bg-gradient-success';
                                                 elseif ($user['role_name'] == 'staff') $role_class = 'bg-gradient-warning';
                                                 ?>
-                                                <span class="badge badge-sm <?php echo $role_class; ?>"><?php echo htmlspecialchars($user['role_name']); ?></span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold"><?php echo date('d/m/Y H:i', strtotime($user['created_at'])); ?></span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="index.php?page=user_form&user_id=<?php echo $user['id']; ?>" class="btn btn-warning btn-sm mb-0" data-toggle="tooltip" data-original-title="แก้ไขข้อมูล">
-                                                    <i class="material-icons text-sm">edit</i>
-                                                </a>
-                                                <?php if ($user['id'] !== $_SESSION['user_id']): // ป้องกันปุ่มลบตัวเอง 
+                    <span
+                      class="badge badge-sm <?php echo $role_class; ?>"><?php echo htmlspecialchars($user['role_name']); ?></span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span
+                      class="text-secondary text-xs font-weight-bold"><?php echo date('d/m/Y H:i', strtotime($user['created_at'])); ?></span>
+                  </td>
+                  <td class="align-middle">
+                    <a href="index.php?page=user_form&user_id=<?php echo $user['id']; ?>"
+                      class="btn btn-warning btn-sm mb-0" data-toggle="tooltip" data-original-title="แก้ไขข้อมูล">
+                      <i class="material-icons text-sm">edit</i>
+                    </a>
+                    <?php if ($user['id'] !== $_SESSION['user_id']): // ป้องกันปุ่มลบตัวเอง 
                                                 ?>
-                                                    <form action="index.php?page=users_list" method="post" style="display: inline;" onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้งานนี้? (การกระทำนี้อาจส่งผลกระทบต่อข้อมูลอื่น)');">
-                                                        <input type="hidden" name="delete_user_id" value="<?php echo $user['id']; ?>">
-                                                        <button type="submit" class="btn btn-danger btn-sm mb-0" data-toggle="tooltip" data-original-title="ลบข้อมูล">
-                                                            <i class="material-icons text-sm">delete</i>
-                                                        </button>
-                                                    </form>
-                                                <?php endif; ?>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <tr>
-                                        <td colspan="5" class="text-center">ยังไม่มีข้อมูลผู้ใช้งาน</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                    <form action="index.php?page=users_list" method="post" style="display: inline;"
+                      onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้งานนี้? (การกระทำนี้อาจส่งผลกระทบต่อข้อมูลอื่น)');">
+                      <input type="hidden" name="delete_user_id" value="<?php echo $user['id']; ?>">
+                      <button type="submit" class="btn btn-danger btn-sm mb-0" data-toggle="tooltip"
+                        data-original-title="ลบข้อมูล">
+                        <i class="material-icons text-sm">delete</i>
+                      </button>
+                    </form>
+                    <?php endif; ?>
+                  </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php else : ?>
+                <tr>
+                  <td colspan="5" class="text-center">ยังไม่มีข้อมูลผู้ใช้งาน</td>
+                </tr>
+                <?php endif; ?>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
-</div> 
+  </div>
+</div>

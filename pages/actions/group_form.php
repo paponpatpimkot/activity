@@ -32,7 +32,7 @@ if ($result_levels) { while ($row = $result_levels->fetch_assoc()) { $levels[] =
 
 // Majors
 $majors = [];
-$sql_majors = "SELECT id, name, major_code FROM majors ORDER BY name ASC";
+$sql_majors = "SELECT id, name, major_code FROM majors ORDER BY major_code ASC";
 $result_majors = $mysqli->query($sql_majors);
 if ($result_majors) { while ($row = $result_majors->fetch_assoc()) { $majors[] = $row; } $result_majors->free(); }
 
@@ -259,176 +259,190 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 <div class="container-fluid py-4">
-     <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="card my-4">
-                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3"><?php echo $page_title; ?></h6>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <?php if (!empty($message)) : ?>
-                        <div class="alert alert-dismissible text-white fade show <?php echo (strpos($message, 'success') !== false || strpos($message, 'สำเร็จ') !== false) ? 'alert-success bg-gradient-success' : 'alert-danger bg-gradient-danger'; ?>" role="alert">
-                            <?php echo $message; ?>
-                            <button type="button" class="btn-close p-3" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3"><?php echo $page_title; ?></h6>
+          </div>
+        </div>
+        <div class="card-body">
+          <?php if (!empty($message)) : ?>
+          <div
+            class="alert alert-dismissible text-white fade show <?php echo (strpos($message, 'success') !== false || strpos($message, 'สำเร็จ') !== false) ? 'alert-success bg-gradient-success' : 'alert-danger bg-gradient-danger'; ?>"
+            role="alert">
+            <?php echo $message; ?>
+            <button type="button" class="btn-close p-3" data-bs-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <?php endif; ?>
 
-                    <form role="form" class="text-start" action="<?php echo $form_action; ?>" method="post">
-                        <div class="input-group input-group-outline my-3 <?php echo !empty($group_code) ? 'is-filled' : ''; ?>">
-                            <label class="form-label">รหัสกลุ่ม</label>
-                            <input type="text" id="group_code" name="group_code" class="form-control" value="<?php echo htmlspecialchars($group_code); ?>" required maxlength="50">
-                        </div>
-                        <small class="d-block text-muted mb-2">รหัสตามที่วิทยาลัยกำหนด และต้องไม่ซ้ำกัน</small>
+          <form role="form" class="text-start" action="<?php echo $form_action; ?>" method="post">
+            <div class="input-group input-group-outline my-3 <?php echo !empty($group_code) ? 'is-filled' : ''; ?>">
+              <label class="form-label">รหัสกลุ่ม</label>
+              <input type="text" id="group_code" name="group_code" class="form-control"
+                value="<?php echo htmlspecialchars($group_code); ?>" required maxlength="50">
+            </div>
+            <small class="d-block text-muted mb-2">รหัสตามที่วิทยาลัยกำหนด และต้องไม่ซ้ำกัน</small>
 
-                         <div class="input-group input-group-outline my-3 <?php echo !empty($group_name) ? 'is-filled' : ''; ?>">
-                            <label class="form-label">ชื่อกลุ่ม (เช่น สท.1/1)</label>
-                            <input type="text" id="group_name" name="group_name" class="form-control" value="<?php echo htmlspecialchars($group_name); ?>" required maxlength="100">
-                        </div>
+            <div class="input-group input-group-outline my-3 <?php echo !empty($group_name) ? 'is-filled' : ''; ?>">
+              <label class="form-label">ชื่อกลุ่ม (เช่น สท.1/1)</label>
+              <input type="text" id="group_name" name="group_name" class="form-control"
+                value="<?php echo htmlspecialchars($group_name); ?>" required maxlength="100">
+            </div>
 
-                         <div class="input-group input-group-static mb-4">
-                             <label for="level_id" class="ms-0">ระดับชั้นปี</label>
-                             <select class="form-control" id="level_id" name="level_id" required>
-                                <option value="">-- เลือกระดับชั้นปี --</option>
-                                <?php foreach ($levels as $level): ?>
-                                    <option value="<?php echo $level['id']; ?>" <?php echo ($level_id == $level['id']) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($level['level_name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                             </select>
-                        </div>
+            <div class="input-group input-group-static mb-4">
+              <label for="level_id" class="ms-0">ระดับชั้นปี</label>
+              <select class="form-control" id="level_id" name="level_id" required>
+                <option value="">-- เลือกระดับชั้นปี --</option>
+                <?php foreach ($levels as $level): ?>
+                <option value="<?php echo $level['id']; ?>"
+                  <?php echo ($level_id == $level['id']) ? 'selected' : ''; ?>>
+                  <?php echo htmlspecialchars($level['level_name']); ?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
 
-                         <div class="input-group input-group-static mb-4">
-                             <label for="major_id" class="ms-0">สาขาวิชา</label>
-                             <select class="form-control" id="major_id" name="major_id" required>
-                                <option value="">-- เลือกสาขาวิชา --</option>
-                                 <?php foreach ($majors as $major) : ?>
-                                    <option value="<?php echo $major['id']; ?>" <?php echo ($major_id == $major['id']) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($major['name'] . ' (' . $major['major_code'] . ')'); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                             </select>
-                        </div>
+            <div class="input-group input-group-static mb-4">
+              <label for="major_id" class="ms-0">สาขาวิชา</label>
+              <select class="form-control" id="major_id" name="major_id" required>
+                <option value="">-- เลือกสาขาวิชา --</option>
+                <?php foreach ($majors as $major) : ?>
+                <option value="<?php echo $major['id']; ?>"
+                  <?php echo ($major_id == $major['id']) ? 'selected' : ''; ?>>
+                  <?php echo htmlspecialchars($major['name'] . ' (' . $major['major_code'] . ')'); ?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
 
-                         <hr class="dark horizontal my-3">
-                         <p class="text-sm font-weight-bold">อาจารย์ที่ปรึกษา (เลือกได้มากกว่า 1 คน)</p>
-                         <div class="input-group input-group-outline mb-2">
-                            <label class="form-label">ค้นหาอาจารย์ (พิมพ์ชื่อ/นามสกุล)</label>
-                            <input type="text" id="advisor-search" class="form-control">
-                         </div>
-                         <div id="advisor-search-results" class="list-group mb-3" style="max-height: 150px; overflow-y: auto; border: 1px solid #d2d6da; border-radius: 0.375rem;">
-                             </div>
-                         <p class="text-sm font-weight-bold">อาจารย์ที่ปรึกษาที่เลือก:</p>
-                         <div id="selected-advisors" class="mb-4 d-flex flex-wrap gap-2">
-                             <?php foreach($selected_advisors_data as $advisor): ?>
-                                 <span class="badge bg-gradient-secondary" data-advisor-id="<?php echo $advisor['advisor_user_id']; ?>">
-                                     <?php echo htmlspecialchars($advisor['first_name'] . ' ' . $advisor['last_name']); ?>
-                                     <i class="material-symbols-rounded text-sm cursor-pointer ms-1" onclick="removeAdvisor(this, <?php echo $advisor['advisor_user_id']; ?>)">close</i>
-                                     <input type="hidden" name="advisors[]" value="<?php echo $advisor['advisor_user_id']; ?>">
-                                 </span>
-                             <?php endforeach; ?>
-                         </div>
-                         <div class="text-center">
-                             <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2"><?php echo $is_edit_mode ? 'บันทึกการแก้ไข' : 'เพิ่มกลุ่มเรียน'; ?></button>
-                             <a href="index.php?page=groups_list" class="btn btn-outline-secondary w-100 mb-0">ยกเลิก</a>
-                        </div>
-                    </form>
-                </div> </div> </div> </div> </div>
+            <hr class="dark horizontal my-3">
+            <p class="text-sm font-weight-bold">อาจารย์ที่ปรึกษา (เลือกได้มากกว่า 1 คน)</p>
+            <div class="input-group input-group-outline mb-2">
+              <label class="form-label">ค้นหาอาจารย์ (พิมพ์ชื่อ/นามสกุล)</label>
+              <input type="text" id="advisor-search" class="form-control">
+            </div>
+            <div id="advisor-search-results" class="list-group mb-3"
+              style="max-height: 150px; overflow-y: auto; border: 1px solid #d2d6da; border-radius: 0.375rem;">
+            </div>
+            <p class="text-sm font-weight-bold">อาจารย์ที่ปรึกษาที่เลือก:</p>
+            <div id="selected-advisors" class="mb-4 d-flex flex-wrap gap-2">
+              <?php foreach($selected_advisors_data as $advisor): ?>
+              <span class="badge bg-gradient-secondary" data-advisor-id="<?php echo $advisor['advisor_user_id']; ?>">
+                <?php echo htmlspecialchars($advisor['first_name'] . ' ' . $advisor['last_name']); ?>
+                <i class="material-symbols-rounded text-sm cursor-pointer ms-1"
+                  onclick="removeAdvisor(this, <?php echo $advisor['advisor_user_id']; ?>)">close</i>
+                <input type="hidden" name="advisors[]" value="<?php echo $advisor['advisor_user_id']; ?>">
+              </span>
+              <?php endforeach; ?>
+            </div>
+            <div class="text-center">
+              <button type="submit"
+                class="btn bg-gradient-primary w-100 my-4 mb-2"><?php echo $is_edit_mode ? 'บันทึกการแก้ไข' : 'เพิ่มกลุ่มเรียน'; ?></button>
+              <a href="index.php?page=groups_list" class="btn btn-outline-secondary w-100 mb-0">ยกเลิก</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-    const advisorSearchInput = document.getElementById('advisor-search');
-    const searchResultsContainer = document.getElementById('advisor-search-results');
-    const selectedAdvisorsContainer = document.getElementById('selected-advisors');
-    let searchTimeout;
+const advisorSearchInput = document.getElementById('advisor-search');
+const searchResultsContainer = document.getElementById('advisor-search-results');
+const selectedAdvisorsContainer = document.getElementById('selected-advisors');
+let searchTimeout;
 
-    // Function to add advisor
-    function addAdvisor(id, name) {
-        // Check if already selected
-        if (selectedAdvisorsContainer.querySelector(`input[value="${id}"]`)) {
-            advisorSearchInput.value = ''; // Clear search
-            searchResultsContainer.innerHTML = ''; // Clear results
-            return; // Already selected
-        }
+// Function to add advisor
+function addAdvisor(id, name) {
+  // Check if already selected
+  if (selectedAdvisorsContainer.querySelector(`input[value="${id}"]`)) {
+    advisorSearchInput.value = ''; // Clear search
+    searchResultsContainer.innerHTML = ''; // Clear results
+    return; // Already selected
+  }
 
-        // Create badge for selected advisor
-        const badge = document.createElement('span');
-        badge.className = 'badge bg-gradient-secondary';
-        badge.dataset.advisorId = id;
-        badge.innerHTML = `
+  // Create badge for selected advisor
+  const badge = document.createElement('span');
+  badge.className = 'badge bg-gradient-secondary';
+  badge.dataset.advisorId = id;
+  badge.innerHTML = `
             ${name}
             <i class="material-symbols-rounded text-sm cursor-pointer ms-1" onclick="removeAdvisor(this, ${id})">close</i>
             <input type="hidden" name="advisors[]" value="${id}">
         `;
-        selectedAdvisorsContainer.appendChild(badge);
+  selectedAdvisorsContainer.appendChild(badge);
 
-        // Clear search input and results
-        advisorSearchInput.value = '';
-        searchResultsContainer.innerHTML = '';
-    }
+  // Clear search input and results
+  advisorSearchInput.value = '';
+  searchResultsContainer.innerHTML = '';
+}
 
-    // Function to remove advisor
-    function removeAdvisor(element, id) {
-        const badge = element.closest('.badge');
-        if (badge) {
-            badge.remove();
+// Function to remove advisor
+function removeAdvisor(element, id) {
+  const badge = element.closest('.badge');
+  if (badge) {
+    badge.remove();
+  }
+}
+
+// Event listener for search input
+advisorSearchInput.addEventListener('keyup', function() {
+  clearTimeout(searchTimeout);
+  const searchTerm = this.value.trim();
+
+  if (searchTerm.length < 1) { // Minimum characters to search (adjust if needed)
+    searchResultsContainer.innerHTML = '';
+    return;
+  }
+
+  searchTimeout = setTimeout(() => {
+    // --- ใช้ Path ที่ถูกต้องไปยัง search_advisors.php ---
+    fetch(`search_advisors.php?term=${encodeURIComponent(searchTerm)}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-    }
-
-    // Event listener for search input
-    advisorSearchInput.addEventListener('keyup', function() {
-        clearTimeout(searchTimeout);
-        const searchTerm = this.value.trim();
-
-        if (searchTerm.length < 1) { // Minimum characters to search (adjust if needed)
-            searchResultsContainer.innerHTML = '';
-            return;
+        return response.json();
+      })
+      .then(data => {
+        searchResultsContainer.innerHTML = ''; // Clear previous results
+        if (data.length > 0) {
+          data.forEach(advisor => {
+            // Don't show if already selected
+            if (!selectedAdvisorsContainer.querySelector(`input[value="${advisor.id}"]`)) {
+              const item = document.createElement('a');
+              item.href = '#';
+              item.className = 'list-group-item list-group-item-action py-2';
+              item.textContent = advisor.label;
+              item.onclick = function(e) {
+                e.preventDefault();
+                addAdvisor(advisor.id, advisor.label);
+              };
+              searchResultsContainer.appendChild(item);
+            }
+          });
+        } else {
+          searchResultsContainer.innerHTML =
+            '<span class="list-group-item py-2 text-muted text-sm">ไม่พบข้อมูลอาจารย์</span>';
         }
+      })
+      .catch(error => {
+        console.error('Error fetching advisors:', error);
+        searchResultsContainer.innerHTML =
+          '<span class="list-group-item py-2 text-danger text-sm">เกิดข้อผิดพลาดในการค้นหา</span>';
+      });
+  }, 300); // Delay before searching (milliseconds)
+});
 
-        searchTimeout = setTimeout(() => {
-            // --- ใช้ Path ที่ถูกต้องไปยัง search_advisors.php ---
-            fetch(`search_advisors.php?term=${encodeURIComponent(searchTerm)}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    searchResultsContainer.innerHTML = ''; // Clear previous results
-                    if (data.length > 0) {
-                        data.forEach(advisor => {
-                            // Don't show if already selected
-                            if (!selectedAdvisorsContainer.querySelector(`input[value="${advisor.id}"]`)) {
-                                const item = document.createElement('a');
-                                item.href = '#';
-                                item.className = 'list-group-item list-group-item-action py-2';
-                                item.textContent = advisor.label;
-                                item.onclick = function(e) {
-                                    e.preventDefault();
-                                    addAdvisor(advisor.id, advisor.label);
-                                };
-                                searchResultsContainer.appendChild(item);
-                            }
-                        });
-                    } else {
-                        searchResultsContainer.innerHTML = '<span class="list-group-item py-2 text-muted text-sm">ไม่พบข้อมูลอาจารย์</span>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching advisors:', error);
-                    searchResultsContainer.innerHTML = '<span class="list-group-item py-2 text-danger text-sm">เกิดข้อผิดพลาดในการค้นหา</span>';
-                });
-        }, 300); // Delay before searching (milliseconds)
-    });
-
-    // Clear results if user clicks outside
-    document.addEventListener('click', function(event) {
-        if (!advisorSearchInput.contains(event.target) && !searchResultsContainer.contains(event.target)) {
-            searchResultsContainer.innerHTML = '';
-        }
-    });
-
+// Clear results if user clicks outside
+document.addEventListener('click', function(event) {
+  if (!advisorSearchInput.contains(event.target) && !searchResultsContainer.contains(event.target)) {
+    searchResultsContainer.innerHTML = '';
+  }
+});
 </script>

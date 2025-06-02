@@ -3,7 +3,8 @@
 
 ob_start(); // เริ่ม Output Buffering
 session_start();
-require 'db_connect.php'; // ตรวจสอบ Path ให้ถูกต้อง
+require '../admin/db_connect.php'; // ตรวจสอบ Path ให้ถูกต้อง
+require_once '../includes/functions.php';
 if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 2) { 
   header('Location: ../../login.php?error=unauthorized');
   exit;
@@ -72,7 +73,7 @@ $page = $_GET['page'] ?? 'advisor_summary'; // กำหนดหน้า defau
     <div class="container-fluid py-2">
       <?php
       // --- ส่วน Include เนื้อหาหลัก ---
-      $pages_directory = '../actions/'; 
+      $pages_directory = ''; 
       $file_to_include = '';
       $page_title = ''; // Reset page title
 
@@ -86,8 +87,16 @@ $page = $_GET['page'] ?? 'advisor_summary'; // กำหนดหน้า defau
           break;      
         case 'edit_profile':
           $page_title = 'แก้ไขข้อมูลส่วนตัว';
-          $file_to_include = $pages_directory . 'edit_profile.php'; // สมมติว่าไฟล์อยู่ใน pages
-          break;  
+          $file_to_include = $pages_directory . '../actions/edit_profile.php'; // สมมติว่าไฟล์อยู่ใน pages
+          break;
+        case 'advisor_attendance_select_activity':
+          $page_title = 'เลือกกิจกรรมเพื่อเช็คชื่อนักศึกษาในที่ปรึกษา';
+          $file_to_include = $pages_directory . 'advisor_attendance_select_activity.php'; // สมมติว่าไฟล์อยู่ใน pages
+          break;          
+        case 'advisor_attendance_record':
+          $page_title = 'ที่ปรึกษาเช็คชื่อ';
+          $file_to_include = $pages_directory . 'advisor_attendance_record.php'; // สมมติว่าไฟล์อยู่ใน pages
+          break;          
         default:
           $page_title = 'ไม่พบหน้า';
           $file_to_include = '404.php'; // หน้า 404

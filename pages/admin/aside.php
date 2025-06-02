@@ -4,6 +4,7 @@
 // $currentPage = $_GET['page'] ?? 'dashboard'; // ตัวอย่างการดึงหน้าปัจจุบัน
 // ในโค้ดด้านล่าง จะยังคงใช้ active ที่ Dashboard เป็นตัวอย่าง
 ?>
+
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -21,9 +22,10 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
-      <li class="nav-item mt-3">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">นำเข้าข้อมูล</h6>
-      </li>
+      <h6 class="ps-3 pe-2 py-2 ms-2 me-2 text-uppercase text-xs text-white font-weight-bolder opacity-8 bg-gradient-info border-radius-md">
+            <i class="material-symbols-rounded opacity-10 me-1" style="vertical-align: text-bottom;">file_present</i>
+            นำเข้าข้อมูล
+      </h6>
       <li class="nav-item">
         <a class="nav-link text-dark <?php echo (($page ?? '') === 'import_data') ? 'active bg-gradient-primary text-white' : ''; ?>" href="index.php?page=import_data">
           <i class="material-symbols-rounded opacity-10 me-2">upload_file</i>
@@ -31,7 +33,7 @@
         </a>
       </li>
        <li class="nav-item mt-3">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">จัดการข้อมูลพื้นฐาน</h6>
+        <h6 class="ps-3 pe-2 py-2 ms-2 me-2 text-uppercase text-xs text-white font-weight-bolder opacity-8 bg-gradient-info border-radius-md">จัดการข้อมูลพื้นฐาน</h6>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark <?php echo (($page ?? '') === 'majors_list') ? 'active bg-gradient-primary text-white' : ''; ?>" href="index.php?page=majors_list">
@@ -52,7 +54,7 @@
         </a>
       </li>
        <li class="nav-item mt-3">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">จัดการผู้ใช้งาน & กิจกรรม</h6>
+        <h6 class="ps-3 pe-2 py-2 ms-2 me-2 text-uppercase text-xs text-white font-weight-bolder opacity-8 bg-gradient-info border-radius-md">จัดการผู้ใช้งาน & กิจกรรม</h6>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark <?php echo (($page ?? '') === 'users_list') ? 'active bg-gradient-primary text-white' : ''; ?>" href="index.php?page=users_list">
@@ -85,7 +87,7 @@
         </a>
       </li>
        <li class="nav-item mt-3">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">การเข้าร่วมกิจกรรม</h6>
+        <h6 class="ps-3 pe-2 py-2 ms-2 me-2 text-uppercase text-xs text-white font-weight-bolder opacity-8 bg-gradient-info border-radius-md">การเข้าร่วมกิจกรรม</h6>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark <?php echo (($page ?? '') === 'attendance_select_activity') ? 'active bg-gradient-primary text-white' : ''; ?>" href="index.php?page=attendance_select_activity">
@@ -100,7 +102,7 @@
         </a>
       </li>
        <li class="nav-item mt-3">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">บัญชี</h6>
+        <h6 class="ps-3 pe-2 py-2 ms-2 me-2 text-uppercase text-xs text-white font-weight-bolder opacity-8 bg-gradient-info border-radius-md">บัญชี</h6>
       </li>
        <li class="nav-item">
         <a class="nav-link text-dark <?php echo (($page ?? '') === 'edit_profile') ? 'active bg-gradient-primary text-white' : ''; ?>" href="index.php?page=edit_profile">

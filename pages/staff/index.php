@@ -3,7 +3,8 @@
 
 ob_start(); // เริ่ม Output Buffering
 session_start();
-require 'db_connect.php'; // ตรวจสอบ Path ให้ถูกต้อง
+require '../admin/db_connect.php'; // ตรวจสอบ Path ให้ถูกต้อง
+require_once '../includes/functions.php';
 if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 4) { // ตรวจสอบว่าเป็น staff (role_id = 4)
   header('Location: ../../login.php?error=unauthorized');
   exit;

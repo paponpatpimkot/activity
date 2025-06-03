@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 
 // --- Fetch Activity Units Data ---
 $units = [];
-$sql = "SELECT id, name, type FROM activity_units ORDER BY name ASC"; // เอา created_at, updated_at ออกถ้าไม่ใช้แสดง
+$sql = "SELECT id, name, type FROM activity_units ORDER BY id ASC"; // เอา created_at, updated_at ออกถ้าไม่ใช้แสดง
 $result = $mysqli->query($sql);
 if ($result) {
     while ($row = $result->fetch_assoc()) {

@@ -137,13 +137,7 @@ if ($required_hours > 0) {
 
 ?>
 <!--Dashboard -->
-<div class="row mt-5">
-  <div class="ms-3">
-    <h5 class="mb-0 h4 font-weight-bolder">ยินดีต้อนรับ<span class="text-primary"><?php echo '  ' . $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] ?></span></h5>
-    <p class="mb-4">
-
-    </p>
-  </div>
+<div class="row mt-5">  
   <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
     <div class="card">
       <div class="card-header p-2 ps-3">

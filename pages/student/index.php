@@ -57,7 +57,7 @@ $page = $_GET['page'] ?? 'dashboard'; // กำหนดหน้า default
 
 <body class="g-sidenav-show bg-gray-100">
 
-  <?php //include 'aside.php'; // Include Sidebar (ตรวจสอบ Path) 
+  <?php include 'aside.php'; // Include Sidebar (ตรวจสอบ Path) 
   ?>
 
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
